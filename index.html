@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ScanOps</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="logo.jpg">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* Container */
+.container {
+  text-align: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Logo */
+.logo {
+  font-size: 48px;
+  margin-bottom: 30px;
+}
+
+.logo span {
+  color: #38bdf8;
+}
+
+/* Search Box */
+.input-group {
+  display: flex;
+  background: #1e293b;
+  border-radius: 30px;
+  padding: 10px 15px;
+  align-items: center;
+  transition: 0.3s;
+}
+
+.input-group:focus-within {
+  box-shadow: 0 0 15px rgba(56,189,248,0.6);
+  transform: scale(1.02);
+}
+
+input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  padding: 10px;
+}
+
+/* Button */
+.btn {
+  margin-top: 15px;
+  padding: 12px;
+  width: 100%;
+  border: none;
+  border-radius: 25px;
+  background: #38bdf8;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* Loading Spinner */
+.btn.loading {
+  color: transparent;
+  position: relative;
+}
+
+.btn.loading::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  border: 3px solid black;
+  border-top: 3px solid transparent;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Result Section */
+.result {
+  margin-top: 30px;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.result.show {
+  animation: fadeIn 0.6s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Risk Score */
+.risk {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.risk.high {
+  color: red;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255,0,0,0.7); }
+  70% { box-shadow: 0 0 0 15px rgba(255,0,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,0,0,0); }
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.card {
+  background: #1e293b;
+  padding: 15px;
+  border-radius: 10px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+/* Footer */
+.footer {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="logo">Scan<span>Ops</span></div>
+
+  <div class="input-group">
+    <input id="input" type="text" placeholder="Enter IP or Domain..." />
+  </div>
+
+  <button class="btn" id="scanBtn">Scan Now</button>
+
+  <!-- Result -->
+  <div class="result" id="result">
+
+    <div class="risk high">Risk Score: 72% 🚨</div>
+
+    <div class="cards">
+      <div class="card">VirusTotal → 12/70 detections</div>
+      <div class="card">IBM X-Force → Medium Risk</div>
+      <div class="card">IPQualityScore → Fraud Score: 85</div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    Scan. Analyze. Decide.
+  </div>
+
+</div>
+
+<script>
+const btn = document.getElementById("scanBtn");
+const result = document.getElementById("result");
+
+btn.addEventListener("click", () => {
+  btn.classList.add("loading");
+
+  setTimeout(() => {
+    btn.classList.remove("loading");
+    result.classList.add("show");
+  }, 2000);
+});
+</script>
+
+</body>
+</html>
